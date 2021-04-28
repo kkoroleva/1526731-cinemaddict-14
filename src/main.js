@@ -3,6 +3,7 @@ import {getMainNavigation} from './view/main-navigation.js';
 import {getSorter} from './view/sorter';
 import {getFilmsSection} from './view/films.js';
 import {getFooterStats} from './view/footer-stats.js';
+import {getFilmDetails} from './view/film-details.js';
 
 
 const renderBlock = (block, container, place = 'beforeend') => {
@@ -18,3 +19,4 @@ renderBlock(getMainNavigation(), main);
 renderBlock(getSorter(), main);
 renderBlock(getFilmsSection(), main);
 renderBlock(getFooterStats(), footer);
+renderBlock(getFilmDetails(), footer, 'afterend');
