@@ -1,5 +1,10 @@
 import {getShowMoreButton} from './show-more-button.js';
-import {getCardsTogether} from './film-card.js';
+import {getFilmCard} from './film-card.js';
+
+const getCardsTogether = (cardsCount) => {
+  const cardsStr = new Array(cardsCount).fill().map(() => getFilmCard()).join('');
+  return cardsStr;
+};
 
 const getBasicFilmsList = () => {
   return `<section class="films-list">
