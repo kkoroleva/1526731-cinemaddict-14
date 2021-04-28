@@ -7,12 +7,8 @@ import {
 import {
   getSorter
 } from './view/sorter';
-import {
-  getFilmsList
-} from './view/films-list.js';
-import {
-  getFilmsListExtra
-} from './view/films-list-extra.js';
+
+import {getFilmsSection} from './view/films.js';
 import {
   getFooterStats
 } from './view/footer-stats.js';
@@ -29,6 +25,5 @@ const footer = document.querySelector('.footer');
 renderBlock(getUserRange(), 'beforeend', header);
 renderBlock(getMainNavigation(), 'beforeend', main);
 renderBlock(getSorter(), 'beforeend', main);
-renderBlock(getFilmsList(), 'beforeend', main);
-renderBlock(getFilmsListExtra(), 'beforeend', main);
+renderBlock(getFilmsSection(), 'beforeend', main);
 renderBlock(getFooterStats(), 'beforeend', footer);
