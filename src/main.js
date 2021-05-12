@@ -17,7 +17,7 @@ const main = document.querySelector('.main');
 const footer = document.querySelector('.footer');
 
 
-const mockData = new Array(20).fill().map(() => getFilm());
+const mockData = new Array(11).fill().map(() => getFilm());
 let renderData = mockData.slice(5);
 
 renderBlock(getUserRange(), header);
@@ -36,10 +36,11 @@ buttonShowMore.addEventListener('click', () => {
 });
 
 const showMoreHandler = (data) => {
-  buttonShowMore.remove();
   const filmsListContainer = filmsList.querySelector('.films-list__container');
   renderBlock(getCardsTogether(data.slice(0,5)), filmsListContainer);
-  renderBlock(getShowMoreButton(data.length-5), filmsList);
+  if (!data.slice(5).length) {
+    buttonShowMore.classList.add('visually-hidden');
+  }
   return data.slice(5);
 };
 
