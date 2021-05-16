@@ -54,6 +54,7 @@ const films = new FilmsSectionView();
 renderElement(films.getElement(), main);
 renderElement(new FooterStatsView(filmsMockData.length).getElement(), footer);
 
+
 const renderFilm = (filmData, filmList) => {
   const film = new FilmCardView(filmData);
   renderElement(film.getElement(), filmList);
