@@ -17,7 +17,7 @@ const main = document.querySelector('.main');
 const footer = document.querySelector('.footer');
 
 
-const mockData = new Array(11).fill().map(() => getFilm());
+const mockData = new Array(21).fill().map(() => getFilm());
 let renderData = mockData.slice(5);
 
 renderBlock(getUserRange(), header);
@@ -29,7 +29,7 @@ renderBlock(getShowMoreButton(mockData.length-5), filmsList);
 
 renderBlock(getFooterStats(), footer);
 
-//renderBlock(getFilmDetails(mockData[0]), footer, 'afterend');
+renderBlock(getFilmDetails(mockData[0]), footer, 'afterend');
 const buttonShowMore = filmsList.querySelector('.films-list__show-more');
 buttonShowMore.addEventListener('click', () => {
   renderData = showMoreHandler(renderData);
