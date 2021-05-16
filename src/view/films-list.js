@@ -1,12 +1,8 @@
 import {createDOMElement} from '../util.js';
 
-const getFilmList = ({header, isExtra}) => {
+const getFilmList = ({header, isExtra, inRow}) => {
   return `<section class="films-list ${isExtra ? 'films-list--extra' : ''}">
-          <h2 class="films-list__title ${isExtra ? '' : 'visually-hidden'}">${header}</h2>
-
-          <div class="films-list__container">
-
-          </div>
+          <h2 class="films-list__title ${isExtra || inRow === 0 ? '' : 'visually-hidden'}">${header}</h2>
 
           </section>`;
 };
