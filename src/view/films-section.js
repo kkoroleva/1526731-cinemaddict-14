@@ -1,16 +1,17 @@
 import {createDOMElement} from '../util.js';
 
-const getShowMoreButton = (filmsCount) => {
-  return filmsCount > 0 ? '<button class="films-list__show-more">Show more</button>': '';
+const getFilmSection = () => {
+  return `<section class="films">
+
+          </section>`;
 };
 
-export default class ShowMoreButton {
-  constructor(filmsCount) {
-    this._filmsCount = filmsCount;
+export default class FilmsSection {
+  constructor() {
     this._element = null;
   }
   getTemplate() {
-    return getShowMoreButton(this._filmsCount);
+    return getFilmSection();
   }
   getElement() {
     if (!this._element) {

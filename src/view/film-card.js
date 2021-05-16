@@ -1,4 +1,6 @@
-export const getFilmCard = ({names, rating, release, duration, genre, poster, description, comments, isWatched, isFavourite, isInWatchlist}) => {
+import {createDOMElement} from '../util.js';
+
+const getFilmCard = ({names, rating, release, duration, genre, poster, description, comments, isWatched, isFavourite, isInWatchlist}) => {
   return `<article class="film-card">
           <h3 class="film-card__title">${names.name}</h3>
           <p class="film-card__rating">${rating}</p>
@@ -17,3 +19,22 @@ export const getFilmCard = ({names, rating, release, duration, genre, poster, de
           </div>
         </article>`;
 };
+
+export default class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+  getTemplate() {
+    return getFilmCard(this._film);
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createDOMElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
+}
