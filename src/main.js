@@ -38,15 +38,15 @@ const header = body.querySelector('.header');
 const main = body.querySelector('.main');
 const footer = body.querySelector('.footer');
 
-const mockData = new Array(MOCKS_SIZE).fill().map(() => getFilm());
+const filmsMockData = new Array(MOCKS_SIZE).fill().map(() => getFilm());
 
-renderElement(new UserRangeView(mockData).getElement(), header);
-renderElement(new MainNavigationView(mockData).getElement(), main);
+renderElement(new UserRangeView(filmsMockData).getElement(), header);
+renderElement(new MainNavigationView(filmsMockData).getElement(), main);
 renderElement(new SorterView().getElement(), main);
 
 const films = new FilmsSectionView();
 renderElement(films.getElement(), main);
-renderElement(new FooterStatsView(mockData.length).getElement(), footer);
+renderElement(new FooterStatsView(filmsMockData.length).getElement(), footer);
 
 const renderFilm = (filmData, filmList) => {
   const film = new FilmCardView(filmData);
@@ -70,7 +70,7 @@ FILM_LISTS_FEATURES.forEach((list) => {
   const FilmListComponent = new FilmsListView(list);
   renderElement(FilmListComponent.getElement(), films.getElement());
   const filmListContainer = FilmListComponent.getElement().querySelector('.films-list__container');
-  let sortedFilmList = sortFilmList(mockData, list.sortField);
+  let sortedFilmList = sortFilmList(filmsMockData, list.sortField);
 
 
   for (let i = 0; i < list.inRow; i++)
