@@ -39,4 +39,19 @@ const renderElement = (element, container, place = 'beforeend') => {
   }
 };
 
-export {getRandomInteger, getRandomFloat, getRandomArrayElement, getRandomArray, createDOMElement, renderElement};
+const sortFilmList = (filmsData, sortField) => {
+  const filmsSorted = filmsData.slice();
+  switch (sortField) {
+    case 'rating':
+      filmsSorted.sort((a, b) => a.rating > b.rating ? -1 : 1);
+      break;
+    case 'comments.length':
+      filmsSorted.sort((a, b) => a.comments.length > b.comments.length ? -1 : 1);
+      break;
+    case 'default':
+      break;
+  }
+  return filmsSorted;
+};
+
+export {getRandomInteger, getRandomFloat, getRandomArrayElement, getRandomArray, createDOMElement, renderElement, sortFilmList};

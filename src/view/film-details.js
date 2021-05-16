@@ -69,7 +69,7 @@ const getFilmDetails = ({names, poster, age, rating, duration, release, genre, d
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${release}</td>
+              <td class="film-details__cell">${release.format('DD MMMM YYYY')}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>

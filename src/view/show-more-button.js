@@ -1,16 +1,16 @@
 import {createDOMElement} from '../util.js';
 
-const getShowMoreButton = (dataLength) => {
-  return dataLength > 0 ? '<button class="films-list__show-more">Show more</button>': '';
+const getShowMoreButton = (filmsCount) => {
+  return filmsCount > 0 ? '<button class="films-list__show-more">Show more</button>': '';
 };
 
 export default class ShowMoreButton {
-  constructor(dataLength) {
-    this._dataLength = dataLength;
+  constructor(filmsCount) {
+    this._filmsCount = filmsCount;
     this._element = null;
   }
   getTemplate() {
-    return getShowMoreButton(this._dataLength);
+    return getShowMoreButton(this._filmsCount);
   }
   getElement() {
     if (!this._element) {
