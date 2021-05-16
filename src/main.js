@@ -48,6 +48,7 @@ const films = new FilmsSectionView();
 renderElement(films.getElement(), main);
 renderElement(new FooterStatsView(filmsMockData.length).getElement(), footer);
 
+
 const renderFilm = (filmData, filmList) => {
   const film = new FilmCardView(filmData);
   renderElement(film.getElement(), filmList);
@@ -71,7 +72,6 @@ FILM_LISTS_FEATURES.forEach((list) => {
   renderElement(FilmListComponent.getElement(), films.getElement());
   const filmListContainer = FilmListComponent.getElement().querySelector('.films-list__container');
   let sortedFilmList = sortFilmList(filmsMockData, list.sortField);
-
 
   for (let i = 0; i < list.inRow; i++)
   {
