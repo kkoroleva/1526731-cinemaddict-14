@@ -1,30 +1,7 @@
 import dayjs from 'dayjs';
+import {getRandomInteger, getRandomFloat, getRandomArrayElement, getRandomArray} from './util.js';
 
 const EXAMPLE = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.';
-
-const getRandomInteger = (max = 1, min = 0) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const getRandomFloat = (max, min = 0) => {
-  return Math.random() * (max - min) + min;
-};
-
-const getRandomArrayElement = (array) => {
-  return array[getRandomInteger(array.length - 1)];
-};
-
-const getRandomArray = (array) => {
-  const result = [];
-  array.forEach((el) => {
-    if (getRandomInteger()) {
-      result.push(el);
-    }
-  });
-  return result;
-};
 
 const getFilmName = () => {
   const filmNames = ['My Beautiful Lady', 'Lord of the Rings', 'Forrest Gump', 'Harry Potter', 'Interstellar'];

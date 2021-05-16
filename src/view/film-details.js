@@ -1,3 +1,5 @@
+import {createDOMElement} from '../util.js';
+
 const renderFilmGenres = (genres) => {
   const genreBlock = [];
   genres.forEach((genre)=>{
@@ -26,7 +28,7 @@ const renderComments = (comments) => {
   return commentBlock.join('');
 };
 
-export const getFilmDetails = ({names, poster, age, rating, duration, release, genre, description, director, actors, scriptwriters, country, isWatched, isFavourite, isInWatchlist, comments}) => {
+const getFilmDetails = ({names, poster, age, rating, duration, release, genre, description, director, actors, scriptwriters, country, isWatched, isFavourite, isInWatchlist, comments}) => {
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
@@ -144,3 +146,22 @@ export const getFilmDetails = ({names, poster, age, rating, duration, release, g
   </form>
 </section>`;
 };
+
+export default class FilmDetails {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+  getTemplate() {
+    return getFilmDetails(this._film);
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createDOMElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    this._element = null;
+  }
+}
