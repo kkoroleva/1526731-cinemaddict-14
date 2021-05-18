@@ -157,12 +157,10 @@ export default class FilmDetails extends AbstractComponentView {
     return getFilmDetails(this._film);
   }
   _closeButtonHandler() {
-    this._callback.closeClick();
+    this._callback.closeClick(this);
   }
   setCloseButtonHandler(callback) {
     this._callback.closeClick = callback;
-    this.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
-      this._closeButtonHandler(this.getElement());
-    }, {once: true});
+    this.getElement().querySelector('.film-details__close-btn').addEventListener('click', this._closeButtonHandler, {once: true});
   }
 }

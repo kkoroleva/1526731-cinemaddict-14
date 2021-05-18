@@ -9,7 +9,7 @@ import FooterStatsView from './view/footer-stats.js';
 import FilmDetailsView from './view/film-details.js';
 import ShowMoreButtonView from './view/show-more-button.js';
 import {getFilm} from './moks.js';
-import {renderElement, sortFilmList} from './util.js';
+import {renderElement, sortFilmList} from './utils/render.js';
 
 const MOCKS_SIZE = 20;
 const FILMS_IN_ROW = 5;
@@ -46,19 +46,17 @@ const footer = body.querySelector('.footer');
 
 const filmsMockData = new Array(MOCKS_SIZE).fill().map(() => getFilm());
 
-renderElement(new UserRangeView(filmsMockData).getElement(), header);
-renderElement(new MainNavigationView(filmsMockData).getElement(), main);
-renderElement(new SorterView().getElement(), main);
+renderElement(new UserRangeView(filmsMockData), header);
+renderElement(new MainNavigationView(filmsMockData), main);
+renderElement(new SorterView(), main);
 
 const films = new FilmsSectionView();
-renderElement(films.getElement(), main);
-renderElement(new FooterStatsView(filmsMockData.length).getElement(), footer);
+renderElement(films, main);
+renderElement(new FooterStatsView(filmsMockData.length), footer);
 
-//функция отрисовки карточки с фильмом
 const renderFilm = (filmData, filmList) => {
   const film = new FilmCardView(filmData);
-  renderElement(film.getElement(), filmList);
-
+  renderElement(film, filmList);
   const popupCloseHandler = (popup) => {
     body.classList.remove('hide-overflow');
     body.removeChild(popup.getElement());
@@ -67,12 +65,10 @@ const renderFilm = (filmData, filmList) => {
   const popupOpenHandler = () => {
     if (!body.querySelector('.film-details')) {
       const popup = new FilmDetailsView(filmData);
-      renderElement(popup.getElement(), body);
+      renderElement(popup, body);
       body.classList.add('hide-overflow');
+
       popup.setCloseButtonHandler(popupCloseHandler);
-      /*popup.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
-        popupCloseHandler(popup);
-      }, {once: true});*/
       document.addEventListener('keydown', (evt) => {
         if (evt.key === 'Escape' || evt.key === 'esc') {
           popupCloseHandler(popup);
@@ -86,33 +82,33 @@ const renderFilm = (filmData, filmList) => {
 
 if (filmsMockData.length === 0) {
   const FilmListComponent = new FilmsListView(EMPTY_LIST_FEATURES);
-  renderElement(FilmListComponent.getElement(), films.getElement());
+  renderElement(FilmListComponent, films);
 }
 else {
   FILM_LISTS_FEATURES.forEach((list) => {
     const FilmListComponent = new FilmsListView(list);
-    renderElement(FilmListComponent.getElement(), films.getElement());
+    renderElement(FilmListComponent, films);
     const filmsContainerComponent = new FilmsContainerView();
-    renderElement(filmsContainerComponent.getElement(), FilmListComponent.getElement());
+    renderElement(filmsContainerComponent, FilmListComponent);
     let sortedFilmList = sortFilmList(filmsMockData, list.sortField);
 
     for (let i = 0; i < list.inRow; i++)
     {
-      renderFilm(sortedFilmList[i], filmsContainerComponent.getElement());
+      renderFilm(sortedFilmList[i], filmsContainerComponent);
     }
 
     if (!list.isExtra) {
       const ShowMoreButton = new ShowMoreButtonView(sortedFilmList.length - list.inRow);
-      renderElement(ShowMoreButton.getElement(), FilmListComponent.getElement());
+      renderElement(ShowMoreButton, FilmListComponent);
       sortedFilmList = sortedFilmList.slice(list.inRow);
       const showMoreHandler = () => {
         const filmsToRender = sortedFilmList.slice(0, FILMS_IN_ROW);
         filmsToRender.forEach((film) => {
-          renderFilm(film, filmsContainerComponent.getElement());
+          renderFilm(film, filmsContainerComponent);
         });
         if (!sortedFilmList.slice(FILMS_IN_ROW).length) {
-          ShowMoreButton.getElement().classList.add('visually-hidden');
-          ShowMoreButton.getElement().removeEventListener('click', showMoreHandler);
+          ShowMoreButton.getElement().classList.add('visually-hidden'); //надо ли от этого избавляться?
+          ShowMoreButton.getElement().removeEventListener('click', showMoreHandler); //надо ли от этого избавляться?
         }
         sortedFilmList = sortedFilmList.slice(FILMS_IN_ROW);
       };
