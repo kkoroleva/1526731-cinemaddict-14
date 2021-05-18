@@ -54,18 +54,25 @@ const films = new FilmsSectionView();
 renderElement(films.getElement(), main);
 renderElement(new FooterStatsView(filmsMockData.length).getElement(), footer);
 
+//функция отрисовки карточки с фильмом
 const renderFilm = (filmData, filmList) => {
   const film = new FilmCardView(filmData);
   renderElement(film.getElement(), filmList);
+
+  const popupCloseHandler = (popup) => {
+    body.classList.remove('hide-overflow');
+    body.removeChild(popup.getElement());
+  };
 
   const popupOpenHandler = () => {
     if (!body.querySelector('.film-details')) {
       const popup = new FilmDetailsView(filmData);
       renderElement(popup.getElement(), body);
       body.classList.add('hide-overflow');
-      popup.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
+      popup.setCloseButtonHandler(popupCloseHandler);
+      /*popup.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
         popupCloseHandler(popup);
-      }, {once: true});
+      }, {once: true});*/
       document.addEventListener('keydown', (evt) => {
         if (evt.key === 'Escape' || evt.key === 'esc') {
           popupCloseHandler(popup);
@@ -74,17 +81,7 @@ const renderFilm = (filmData, filmList) => {
     }
   };
 
-  const popupCloseHandler = (popup) => {
-    body.classList.remove('hide-overflow');
-    body.removeChild(popup.getElement());
-  };
-
-  const filmPoster = film.getElement().querySelector('img');
-  filmPoster.addEventListener('click', popupOpenHandler);
-  const filmHeader = film.getElement().querySelector('.film-card__title');
-  filmHeader.addEventListener('click', popupOpenHandler);
-  const filmComments = film.getElement().querySelector('.film-card__comments');
-  filmComments.addEventListener('click', popupOpenHandler);
+  film.setClickHandler(popupOpenHandler);
 };
 
 if (filmsMockData.length === 0) {
@@ -108,10 +105,6 @@ else {
       const ShowMoreButton = new ShowMoreButtonView(sortedFilmList.length - list.inRow);
       renderElement(ShowMoreButton.getElement(), FilmListComponent.getElement());
       sortedFilmList = sortedFilmList.slice(list.inRow);
-      ShowMoreButton.getElement().addEventListener('click', () => {
-        showMoreHandler();
-      });
-
       const showMoreHandler = () => {
         const filmsToRender = sortedFilmList.slice(0, FILMS_IN_ROW);
         filmsToRender.forEach((film) => {
@@ -119,10 +112,12 @@ else {
         });
         if (!sortedFilmList.slice(FILMS_IN_ROW).length) {
           ShowMoreButton.getElement().classList.add('visually-hidden');
-          ShowMoreButton.getElement().removeEventListener('click');
+          ShowMoreButton.getElement().removeEventListener('click', showMoreHandler);
         }
         sortedFilmList = sortedFilmList.slice(FILMS_IN_ROW);
       };
+
+      ShowMoreButton.setClickHandler(showMoreHandler);
     }
   });
 }

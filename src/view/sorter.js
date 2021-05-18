@@ -1,4 +1,4 @@
-import {createDOMElement} from '../util.js';
+import AbstractComponentView from './abstract-component.js';
 
 const getSorter = () => {
   return `<ul class="sort">
@@ -8,20 +8,8 @@ const getSorter = () => {
           </ul>`;
 };
 
-export default class Sorter {
-  constructor() {
-    this._element = null;
-  }
+export default class Sorter extends AbstractComponentView {
   getTemplate() {
     return getSorter();
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createDOMElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }

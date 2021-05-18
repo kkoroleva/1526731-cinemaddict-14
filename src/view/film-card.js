@@ -1,4 +1,4 @@
-import {createDOMElement} from '../util.js';
+import AbstractComponentView from './abstract-component.js';
 
 const getFilmCard = ({names, rating, release, duration, genre, poster, description, comments, isWatched, isFavourite, isInWatchlist}) => {
   return `<article class="film-card">
@@ -20,21 +20,23 @@ const getFilmCard = ({names, rating, release, duration, genre, poster, descripti
         </article>`;
 };
 
-export default class FilmCard {
+export default class FilmCard extends AbstractComponentView {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
+    this._clickHandler = this._clickHandler.bind(this);
   }
   getTemplate() {
     return getFilmCard(this._film);
   }
-  getElement() {
-    if (!this._element) {
-      this._element = createDOMElement(this.getTemplate());
-    }
-    return this._element;
+  setClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement().querySelector('img').addEventListener('click', this._clickHandler);
+    this.getElement().querySelector('.film-card__title').addEventListener('click', this._clickHandler);
+    this.getElement().querySelector('.film-card__comments').addEventListener('click', this._clickHandler);
   }
-  removeElement() {
-    this._element = null;
+  _clickHandler(evt) {
+    evt.preventDefault();
+    this._callback.click();
   }
 }

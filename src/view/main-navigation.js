@@ -1,4 +1,4 @@
-import {createDOMElement} from '../util.js';
+import AbstractComponentView from './abstract-component.js';
 
 const getMainNavigation = (filmsData) => {
   let filmsAtWatchlist = 0, filmsAtFavourites = 0, filmsWatched = 0;
@@ -18,21 +18,12 @@ const getMainNavigation = (filmsData) => {
         </nav>`;
 };
 
-export default class MainNavigation {
+export default class MainNavigation extends AbstractComponentView {
   constructor(filmsData) {
+    super();
     this._filmsData = filmsData;
-    this._element = null;
   }
   getTemplate() {
     return getMainNavigation(this._filmsData);
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createDOMElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }
