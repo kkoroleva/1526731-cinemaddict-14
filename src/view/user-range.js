@@ -1,4 +1,4 @@
-import {createDOMElement} from '../util.js';
+import AbstractComponentView from './abstract-component.js';
 
 const countWatched = (filmsData) => {
   let counter = 0;
@@ -24,21 +24,12 @@ const getUserRange = (filmsData) => {
           </section>`;
 };
 
-export default class UserRange {
+export default class UserRange extends AbstractComponentView {
   constructor(filmsData) {
+    super ();
     this._filmsData = filmsData;
-    this._element = null;
   }
   getTemplate() {
     return getUserRange(this._filmsData);
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createDOMElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }

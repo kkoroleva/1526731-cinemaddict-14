@@ -1,26 +1,4 @@
-const getRandomInteger = (max = 1, min = 0) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const getRandomFloat = (max, min = 0) => {
-  return Math.random() * (max - min) + min;
-};
-
-const getRandomArrayElement = (array) => {
-  return array[getRandomInteger(array.length - 1)];
-};
-
-const getRandomArray = (array) => {
-  const result = [];
-  array.forEach((el) => {
-    if (getRandomInteger()) {
-      result.push(el);
-    }
-  });
-  return result;
-};
+import AbstractComponentView from '../view/abstract-component.js';
 
 const createDOMElement = (template) => {
   const newElement =  document.createElement('div');
@@ -29,6 +7,14 @@ const createDOMElement = (template) => {
 };
 
 const renderElement = (element, container, place = 'beforeend') => {
+  if (container instanceof AbstractComponentView) {
+    container = container.getElement();
+  }
+
+  if (element instanceof AbstractComponentView) {
+    element = element.getElement();
+  }
+
   switch (place) {
     case 'beforeend':
       container.append(element);
@@ -54,4 +40,4 @@ const sortFilmList = (filmsData, sortField) => {
   return filmsSorted;
 };
 
-export {getRandomInteger, getRandomFloat, getRandomArrayElement, getRandomArray, createDOMElement, renderElement, sortFilmList};
+export {createDOMElement, renderElement, sortFilmList};

@@ -1,4 +1,4 @@
-import {createDOMElement} from '../util.js';
+import AbstractComponentView from './abstract-component.js';
 
 const getFooterStats = (num = 130291) => {
   return `<section class="footer__statistics">
@@ -6,21 +6,12 @@ const getFooterStats = (num = 130291) => {
           </section>`;
 };
 
-export default class FooterStats {
+export default class FooterStats extends AbstractComponentView {
   constructor(filmsAmount) {
+    super();
     this._filmsAmount = filmsAmount;
-    this._element = null;
   }
   getTemplate() {
     return getFooterStats(this._filmsAmount);
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createDOMElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }

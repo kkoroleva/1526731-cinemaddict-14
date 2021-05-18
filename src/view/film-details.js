@@ -1,4 +1,4 @@
-import {createDOMElement} from '../util.js';
+import AbstractComponentView from './abstract-component.js';
 
 const renderFilmGenres = (genres) => {
   const genreBlock = [];
@@ -93,14 +93,14 @@ const getFilmDetails = ({names, poster, age, rating, duration, release, genre, d
       </div>
 
       <section class="film-details__controls">
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
-        <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ${isInWatchlist ? 'film-card__controls-item--active':''}">Add to watchlist</label>
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isInWatchlist ? 'checked':''}>
+        <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
-        <label for="watched" class="film-details__control-label film-details__control-label--watched ${isWatched ? 'film-card__controls-item--active':''}">Already watched</label>
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isWatched ? 'checked':''}>
+        <label for="watched" class="film-details__control-label film-details__control-label--watched ">Already watched</label>
 
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
-        <label for="favorite" class="film-details__control-label film-details__control-label--favorite ${isFavourite ? 'film-card__controls-item--active':''}">Add to favorites</label>
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isFavourite ? 'checked':''}>
+        <label for="favorite" class="film-details__control-label film-details__control-label--favorite ">Add to favorites</label>
       </section>
     </div>
 
@@ -147,21 +147,20 @@ const getFilmDetails = ({names, poster, age, rating, duration, release, genre, d
 </section>`;
 };
 
-export default class FilmDetails {
+export default class FilmDetails extends AbstractComponentView {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
+    this._closeButtonHandler = this._closeButtonHandler.bind(this);
   }
   getTemplate() {
     return getFilmDetails(this._film);
   }
-  getElement() {
-    if (!this._element) {
-      this._element = createDOMElement(this.getTemplate());
-    }
-    return this._element;
+  _closeButtonHandler() {
+    this._callback.closeClick(this);
   }
-  removeElement() {
-    this._element = null;
+  setCloseButtonHandler(callback) {
+    this._callback.closeClick = callback;
+    this.getElement().querySelector('.film-details__close-btn').addEventListener('click', this._closeButtonHandler, {once: true});
   }
 }

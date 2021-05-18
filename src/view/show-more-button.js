@@ -1,24 +1,24 @@
-import {createDOMElement} from '../util.js';
+import AbstractComponentView from './abstract-component.js';
 
 const getShowMoreButton = (filmsCount) => {
   return filmsCount > 0 ? '<button class="films-list__show-more">Show more</button>': '';
 };
 
-export default class ShowMoreButton {
+export default class ShowMoreButton extends AbstractComponentView {
   constructor(filmsCount) {
+    super();
     this._filmsCount = filmsCount;
-    this._element = null;
+    this._clickHandler = this._clickHandler.bind(this);
   }
   getTemplate() {
     return getShowMoreButton(this._filmsCount);
   }
-  getElement() {
-    if (!this._element) {
-      this._element = createDOMElement(this.getTemplate());
-    }
-    return this._element;
+  setClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement().addEventListener('click', this._clickHandler);
   }
-  removeElement() {
-    this._element = null;
+  _clickHandler(evt) {
+    evt.preventDefault();
+    this._callback.click();
   }
 }
