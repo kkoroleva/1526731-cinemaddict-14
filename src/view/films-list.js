@@ -10,9 +10,9 @@ const getFilmList = ({header, isExtra, inRow}) => {
 export default class FilmsList extends AbstractComponentView {
   constructor(listFeatures) {
     super();
-    this._listFeatures = listFeatures;
+    this.listFeatures = listFeatures;
   }
   getTemplate() {
-    return getFilmList(this._listFeatures);
+    return getFilmList(this.listFeatures);
   }
 }

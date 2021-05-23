@@ -25,19 +25,31 @@ const renderElement = (element, container, place = 'beforeend') => {
   }
 };
 
-const sortFilmList = (filmsData, sortField) => {
-  const filmsSorted = filmsData.slice();
-  switch (sortField) {
-    case 'rating':
-      filmsSorted.sort((a, b) => a.rating > b.rating ? -1 : 1);
-      break;
-    case 'comments.length':
-      filmsSorted.sort((a, b) => a.comments.length > b.comments.length ? -1 : 1);
-      break;
-    case 'default':
-      break;
+const removeElement = (element) => {
+  if (!(element instanceof AbstractComponentView)) {
+    throw new Error('Removing element has to be a component');
   }
-  return filmsSorted;
+
+  element.getElement().remove();
+  element.removeElement();
 };
 
-export {createDOMElement, renderElement, sortFilmList};
+const replaceElement = (oldElement, newElement) => {
+  if (oldElement instanceof AbstractComponentView) {
+    oldElement = oldElement.getElement();
+  }
+
+  if (newElement instanceof AbstractComponentView) {
+    newElement = newElement.getElement();
+  }
+
+  const container = oldElement.parentElement;
+
+  if (newElement === null || oldElement === null || container === null) {
+    throw new Error ('One of the elements in replace process does not exist.');
+  }
+
+  container.replaceChild(newElement, oldElement);
+};
+
+export {createDOMElement, renderElement, removeElement, replaceElement};
