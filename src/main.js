@@ -27,3 +27,4 @@ renderElement(new FooterStatsView(filmsMockData.length), footer);
 
 const filmsSection = new FilmsSectionPresenter(films);
 filmsSection.init(filmsMockData);
+
